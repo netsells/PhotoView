@@ -2,21 +2,12 @@ apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion rootProject.ext.sdkVersion
-    buildTypes{
-        debug{}
-    }
 
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion rootProject.ext.sdkVersion
         versionCode 1
         versionName "1.0"
-    }
-    flavorDimensions 'api'
-    productFlavors{
-        defaultFlavor{
-            dimension 'api'
-        }
     }
 }
 
