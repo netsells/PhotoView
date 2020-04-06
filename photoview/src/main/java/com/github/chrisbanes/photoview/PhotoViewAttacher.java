@@ -345,6 +345,16 @@ public class PhotoViewAttacher implements View.OnTouchListener,
                     // fling
                     cancelFling();
                     break;
+                case MotionEvent.ACTION_MOVE:
+                    if (ev.getPointerCount() >= 2
+                        || v.canScrollHorizontally(1)
+                        && v.canScrollHorizontally(-1)) {
+
+                        if (v.getParent() != null) {
+                            v.getParent().requestDisallowInterceptTouchEvent(true);
+                        }
+                    }
+                    break;
                 case MotionEvent.ACTION_CANCEL:
                 case MotionEvent.ACTION_UP:
                     // If the user has zoomed less than min scale, zoom back
@@ -362,6 +372,14 @@ public class PhotoViewAttacher implements View.OnTouchListener,
                             v.post(new AnimatedZoomRunnable(getScale(), mMaxScale,
                                 rect.centerX(), rect.centerY()));
                             handled = true;
+                        }
+                    }
+                    if (ev.getPointerCount() >= 2
+                        || v.canScrollHorizontally(1)
+                        && v.canScrollHorizontally(-1)) {
+
+                        if (v.getParent() != null) {
+                            v.getParent().requestDisallowInterceptTouchEvent(false);
                         }
                     }
                     break;
