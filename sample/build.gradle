@@ -3,12 +3,12 @@ apply plugin: "com.android.application"
 apply plugin: "kotlin-android"
 
 android {
-    compileSdkVersion rootProject.ext.sdkVersion
+    compileSdkVersion 29
 
     defaultConfig {
         applicationId "uk.co.senab.photoview.sample"
         minSdkVersion 14
-        targetSdkVersion rootProject.ext.sdkVersion
+        targetSdkVersion 29
         versionCode 100
         versionName "1.0"
     }
