@@ -335,12 +335,6 @@ public class PhotoViewAttacher implements View.OnTouchListener,
         if (mZoomEnabled && Util.hasDrawable((ImageView) v)) {
             switch (ev.getAction()) {
                 case MotionEvent.ACTION_DOWN:
-                    ViewParent parent = v.getParent();
-                    // First, disable the Parent from intercepting the touch
-                    // event
-                    if (parent != null) {
-                        parent.requestDisallowInterceptTouchEvent(true);
-                    }
                     // If we're flinging, and the user presses down, cancel
                     // fling
                     cancelFling();
@@ -349,6 +343,7 @@ public class PhotoViewAttacher implements View.OnTouchListener,
                     if (ev.getPointerCount() >= 2
                         || v.canScrollHorizontally(1)
                         && v.canScrollHorizontally(-1)) {
+
 
                         if (v.getParent() != null) {
                             mBlockParentIntercept = true;
