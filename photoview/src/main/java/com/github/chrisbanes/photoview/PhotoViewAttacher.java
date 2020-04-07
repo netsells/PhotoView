@@ -351,6 +351,7 @@ public class PhotoViewAttacher implements View.OnTouchListener,
                         && v.canScrollHorizontally(-1)) {
 
                         if (v.getParent() != null) {
+                            mBlockParentIntercept = true;
                             v.getParent().requestDisallowInterceptTouchEvent(true);
                         }
                     }
@@ -379,6 +380,7 @@ public class PhotoViewAttacher implements View.OnTouchListener,
                         && v.canScrollHorizontally(-1)) {
 
                         if (v.getParent() != null) {
+                            mBlockParentIntercept = false;
                             v.getParent().requestDisallowInterceptTouchEvent(false);
                         }
                     }
@@ -391,7 +393,7 @@ public class PhotoViewAttacher implements View.OnTouchListener,
                 handled = mScaleDragDetector.onTouchEvent(ev);
                 boolean didntScale = !wasScaling && !mScaleDragDetector.isScaling();
                 boolean didntDrag = !wasDragging && !mScaleDragDetector.isDragging();
-                mBlockParentIntercept = didntScale && didntDrag;
+                //mBlockParentIntercept = didntScale && didntDrag;
             }
             // Check to see if the user double tapped
             if (mGestureDetector != null && mGestureDetector.onTouchEvent(ev)) {
