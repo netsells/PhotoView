@@ -34,6 +34,7 @@ public class PhotoView extends AppCompatImageView {
 
     private PhotoViewAttacher attacher;
     private ScaleType pendingScaleType;
+    private float[] m;
 
     public PhotoView(Context context) {
         this(context, null);
@@ -50,6 +51,7 @@ public class PhotoView extends AppCompatImageView {
 
     private void init() {
         attacher = new PhotoViewAttacher(this);
+        m = new float[9];
         //We always pose as a Matrix scale type, though we can change to another scale type
         //via the attacher
         super.setScaleType(ScaleType.MATRIX);
@@ -252,5 +254,43 @@ public class PhotoView extends AppCompatImageView {
 
     public void setOnSingleFlingListener(OnSingleFlingListener onSingleFlingListener) {
         attacher.setOnSingleFlingListener(onSingleFlingListener);
+    }
+
+    @Override
+    public boolean canScrollHorizontally(int direction) {
+        getImageMatrix().getValues(m);
+        float x = m[Matrix.MTRANS_X];
+
+        if (getImageWidth() < getMeasuredWidth()) {
+            return false;
+
+        } else if (x >= -1 && direction < 0) {
+            return false;
+
+        } else return !(Math.abs(x) + getMeasuredWidth() + 1 >= getImageWidth()) || direction <= 0;
+
+    }
+
+    private float getImageWidth(){
+        return getMeasuredWidth() * getScaleX();
+    }
+
+    private float getImageHeight(){
+        return getMeasuredHeight() * getScaleY();
+    }
+
+    @Override
+    public boolean canScrollVertically(int direction) {
+        getImageMatrix().getValues(m);
+        float y = m[Matrix.MTRANS_Y];
+
+        if (getImageHeight() < getMeasuredHeight()) {
+            return false;
+
+        } else if (y >= -1 && direction < 0) {
+            return false;
+
+        } else return !(Math.abs(y) + getMeasuredHeight() + 1 >= getImageHeight()) || direction <= 0;
+
     }
 }
